@@ -1,59 +1,153 @@
 <template>
-<div class="grid-container">
-    <form @submit="onSubmit" class="add-form">
-        <div class ="form-control">
-            <label>Nom :</label>
-            <input type="text" v-model="serie.titre" name="text" placeholder="Prison Break"/>
-            </div>
-        <div class ="form-controldes">
-            <label>Description :</label>
-            <textarea name="description" rows="5" cols="35" v-model="serie.description" placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."/>
-            </div>
-        <div class ="form-control">
+  <div class="grid-container">
+    <div class="add-form">
+      <div class="form-control">
+        <label>Nom :</label>
+        <input type="text"
+          v-model="serie.titre"
+          name="text"
+          placeholder="Prison Break"
+        />
+      </div>
+      <div class="form-controldes">
+        <label>Description :</label>
+        <textarea name="description" rows="5" cols="35"
+          v-model="serie.description"
+          placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."
+        />
+      </div>
+      <div class="form-control" v-for="user in tabUsers" :key="user.idUser"> 
+      <input type="checkbox" v-bind:id="user.idUser" v-bind:name="user.idUser" v-bind:value="user.idUser" v-model="userListLike">
+
+       <label v-bind:for="user.idUser"> {{user.pseudo}} </label><br>
+      </div>
+      <div class="form-control">
         <label>Ajouter une image</label>
-        <input type="file" id="myFile" name="filename">
-        </div>
-        <div btndiv>
-            <button @:click='create()' class="btnform">Ajouter</button>
-            <input type="reset" value="Annuler" class="btncancel">
-            <router-link to="/Home"> Retourner à la page d'accueil</router-link>
-        </div>
-    </form>
-            </div>
+        <input type="file" id="myFile" name="filename" />
+      </div>
+      <div btndiv>
+        <button @click="create()" class="btnform">Ajouter</button>
+        <button @click="serie = {}" class="btncancel">Annuler</button>
+        <router-link to="/Home"> Retourner à la page d'accueil</router-link>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-    name: 'AjouterSerie',
-    data() {
-        return{
-          serie: {
-            titre: '',
-            Description: '',
-        }
-        }
-    },
-    methods: {
-      create() {
-      axios.post(this.url, this.serie).then((response) => {
-        console.log(response);
-        this.showCreate = false;
-        this.get_series();
-      })
-      . catch(error => {
-        console.log(error)
-    });
-      console.log("saved");
-    },
-      }
+  name: "AjouterSerie",
+  data() {
+    return {
+      serie: {
+        titre: "",
+        description: "",
+      },
+    tabUsers: [],
+    userListLike: [],
     };
+  },
+  mounted() {
+    if (this.$route.params.id) {
+      this.getSerie(this.$route.params.id);
+    }
+    this.getUsers();
+  },
+  methods: {
+    create() {
+      if (this.$route.params.id) {
+        axios
+          .put(
+            "http://localhost:5000/api/serie/" + this.$route.params.id,
+            this.serie
+          )
+          .then((response) => {
+            console.log(response);
+            this.$router.push({
+              name: "Home",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        axios
+          .post("http://localhost:5000/api/serie/add", this.serie)
+          .then((response) => {
+            console.log(response);
+            this.$router.push({
+              name: "Home",
+            });
+
+            if(this.userListLike.length > 0) {
+              console.log(response.data.insertId);
+              this.addUserLike(response.data.insertId);
+            }
+
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        console.log("saved");
+      }
+    },
+    getSerie(id) {
+      axios
+        .get("http://localhost:5000/api/serie/" + id)
+        .then((response) => {
+          this.serie = {
+            titre: response.data[0].Titre,
+            description: response.data[0].Description,
+          };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  getUsers() {
+      axios
+        .get("http://localhost:5000/api/users")
+        .then((response) => {
+          this.tabUsers = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  
+  addUserLike(idSerie) {
+    console.log("hello " + idSerie);
+    let tabUserIdLike = this.getTabUserIdLike(idSerie);
+
+     axios
+     .post("http://localhost:5000/api/userlike", tabUserIdLike)
+     .then((response) =>{
+       console.log(response.data);
+        })
+        .catch((error) =>{
+          console.log(error);
+        });
+  },
+  getTabUserIdLike(newId){
+    let userIdLike = [];
+
+    for(let like of this.userListLike){
+      userIdLike.push({"SerieId":newId, "UserId":like});
+    }
+
+    return userIdLike;
+  }
+
+  
+}}
 </script>
 
 <style>
 .add-form {
   margin-bottom: 40px;
-  width:300px;
-  padding:20px;
+  width: 300px;
+  padding: 20px;
 }
 .form-control {
   margin: 20px 0;
@@ -91,35 +185,35 @@ export default {
 }
 
 .btnform {
-    background-color: #8fd14f;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    cursor: pointer;
-  }
+  background-color: #8fd14f;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+}
 
 .btncancel {
-    background-color: #ffafcc;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 0px 5px;
-    cursor: pointer;
+  background-color: #ffafcc;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 0px 5px;
+  cursor: pointer;
 }
 @media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
+  .col-25,
+  .col-75,
+  input[type="submit"] {
     width: 100%;
     margin-top: 0;
   }
-
-};
-
+}
 </style>

@@ -1,31 +1,24 @@
 <template>
-<div class="grid-container">
-  <div class='navbar'>
-    <navbar />
+  <div class="grid-container">
+    <div class="navbar">
+      <navbar />
     </div>
-<div class='footer'>
-<Footer />
-</div>
-</div>
-
+    <div class="footer">
+      <Footer />
+    </div>
+  </div>
 </template>
 
 <script>
-import Footer from './components/Footer'
-import navbar from './components/navbar.vue'
-
+import Footer from "./components/Footer";
+import navbar from "./components/navbar.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Footer,
     navbar,
   },
-    mounted: function () {
-    axios.get('http://localhost:5000/api/serie/')
-    .then(response => this.posts = response.data)
-    .catch(error => this.posts= {titre: 'pas de série trouvée'});
-}
 };
 </script>
 
@@ -45,15 +38,19 @@ export default {
     "milieu"
     "footer";
 }
-.navbar { grid-area: navbar; }
-.footer { grid-area: footer; }
+.navbar {
+  grid-area: navbar;
+}
+.footer {
+  grid-area: footer;
+}
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 body {
-  height: 100%
+  height: 100%;
 }
 .btn {
   display: inline-block;
@@ -79,9 +76,11 @@ body {
   width: 100%;
 }
 @media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
+  .col-25,
+  .col-75,
+  input[type="submit"] {
     width: 100%;
     margin-top: 0;
   }
-};
+}
 </style>

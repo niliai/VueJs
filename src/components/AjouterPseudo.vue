@@ -1,35 +1,55 @@
 <template>
-<div class='grid-container'>
-     <form @submit="onSubmit" class="add-form">
-        <div class ="form-control">
-            <label>Pseudo</label>
-            <input type="text" v-model="text" name="text" placeholder="Ton pseudo"/>
-            </div>
-            <button @:click='adduser(user.iduser)' class="btnform"> Je m'inscris </button>
-            <input type="reset" value="Annuler" class="btncancel">
-            <router-link to="/Home"> Retourner à la page d'accueil</router-link>  
-    </form>
+  <div class="grid-container">
+    <div class="add-form">
+      <div class="form-control">
+        <label>Pseudo</label>
+        <input
+          type="text"
+          v-model="pseudo"
+          name="text"
+          placeholder="Ton pseudo"
+        />
+      </div>
+      <button @click="adduser()" class="btnform">Je m'inscris</button>
+      <button @click="pseudo = ''" class="btncancel">Annuler</button>
+      <router-link to="/Home"> Retourner à la page d'accueil</router-link>
     </div>
+  </div>
 </template>
 <script>
+import axios from "axios";
 export default {
-    name: 'AjouterPseudo',
-    data() {
-        return{
-            pseudo: '',
-        }
+  name: "AjouterPseudo",
+  data() {
+    return {
+      pseudo: "",
+    };
+  },
+  methods: {
+    adduser() {
+      if (this.pseudo !== "") {
+        axios
+          .post("http://localhost:5000/api/user/add", { pseudo: this.pseudo })
+          .then((response) => {
+            console.log(response);
+            this.$router.push({
+              name: "Home",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
-    methods: {
-    },
-}
+  },
+};
 </script>
-
 
 <style>
 .add-form {
   margin-bottom: 40px;
-  width:300px;
-  padding:20px;
+  width: 300px;
+  padding: 20px;
 }
 .form-control {
   margin: 20px 0;
@@ -67,35 +87,35 @@ export default {
 }
 
 .btnform {
-    background-color: #8fd14f;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    cursor: pointer;
-  }
+  background-color: #8fd14f;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+}
 
 .btncancel {
-    background-color: #ffafcc;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 0px 5px;
-    cursor: pointer;
+  background-color: #ffafcc;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 0px 5px;
+  cursor: pointer;
 }
 @media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
+  .col-25,
+  .col-75,
+  input[type="submit"] {
     width: 100%;
     margin-top: 0;
   }
-
-};
-
+}
 </style>

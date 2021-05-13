@@ -20,6 +20,11 @@ const routes=[
     path:'/add',
     component:Add,
   },
+  {
+    name: "Update",
+    path:'/update/:id',
+    component:Add,
+  },
 ]
 
 const router= createRouter({
