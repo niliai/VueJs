@@ -3,6 +3,8 @@
     <div class="navbar">
       <navbar />
     </div>
+    <div class='body'>
+      </div>
     <div class="footer">
       <Footer />
     </div>
@@ -35,7 +37,7 @@ export default {
   gap: 0px 0px;
   grid-template-areas:
     "navbar"
-    "milieu"
+    "body"
     "footer";
 }
 .navbar {
@@ -50,6 +52,7 @@ export default {
   padding: 0;
 }
 body {
+  grid-area: body;
   height: 100%;
 }
 .btn {

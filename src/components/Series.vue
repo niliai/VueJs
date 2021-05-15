@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class='search'>
     <input type="text" v-model="search" @input="searchFilter()" placeholder="Rechercher une série" />
-    <div id="series">
-      <div v-for="(serie, index) in Series" :key="serie.idSerie">
-        <h1> {{ index + 1 }}. {{ serie.Titre }}&nbsp;&nbsp;<span style="font-size:16px">
-            <span @click="deleteSerie(serie.idSerie)"><i style="color:red" class="fa fa-trash"></i></span
-            >&nbsp;&nbsp;&nbsp;&nbsp;<span @click="update(serie.idSerie)">
+      <div id="series">
+        <div v-for="(serie, index) in Series" :key="serie.idSerie">
+          <h1> {{ index + 1 }}. {{ serie.Titre }}&nbsp;&nbsp;<span style="font-size:16px;">
+            <span @click="deleteSerie(serie.idSerie)"><i style="color:red" class="fa fa-trash"></i></span>&nbsp;&nbsp;&nbsp;&nbsp;<span @click="update(serie.idSerie)">
                 <i class="fa fa-edit"></i></span></span></h1>
         <div>{{ serie.Description }}</div>
-        <span>Liké(s) par : </span>
-        <span v-for="like in tabLikes[index]" :key="like.pseudo"> {{ like.pseudo }} - </span>
+        <span class='italique'>Liké(s) par : </span>
+        
+        <span v-for="like in tabLikes[index]" :key="like.pseudo"> {{ like.pseudo }}  ♥ </span><br>
         <br />
       </div>
     </div>
@@ -95,9 +95,7 @@ export default {
 <style>
 
 #series {
-  background-color: beige;
-  width: 500px;
-  margin: 5px auto;
+  width: auto;
   padding: 5px;
 }
 input[type="text"] {
@@ -105,5 +103,12 @@ input[type="text"] {
   padding: 12px 20px;
   margin: 18px 0;
   box-sizing: border-box;
+}
+.search {
+   padding: 20px 20px 0;
+   align-items: center;
+}
+.italique {
+  font-style: italic;
 }
 </style>

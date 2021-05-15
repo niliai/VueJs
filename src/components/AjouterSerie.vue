@@ -3,29 +3,25 @@
     <div class="add-form">
       <div class="form-control">
         <label>Nom :</label>
-        <input type="text"
-          v-model="serie.titre"
-          name="text"
-          placeholder="Prison Break"
-        />
+        <input type="text" v-model="serie.titre" name="text" placeholder="Prison Break"/>
       </div>
+      
       <div class="form-controldes">
         <label>Description :</label>
-        <textarea name="description" rows="5" cols="35"
-          v-model="serie.description"
-          placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."
-        />
+        <textarea name="description" rows="5" cols="35" v-model="serie.description" placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."/>
       </div>
-      <div class="form-control" v-for="user in tabUsers" :key="user.idUser"> 
-      <input type="checkbox" v-bind:id="user.idUser" v-bind:name="user.idUser" v-bind:value="user.idUser" v-model="userListLike">
+      
+      <div class="check" v-for="user in tabUsers" :key="user.idUser">
+        <input type="checkbox" v-bind:id="user.idUser" v-bind:name="user.idUser" v-bind:value="user.idUser" v-model="userListLike">
+          <label v-bind:for="user.idUser"> {{user.pseudo}} </label><br> 
+      </div>
 
-       <label v-bind:for="user.idUser"> {{user.pseudo}} </label><br>
-      </div>
       <div class="form-control">
         <label>Ajouter une image</label>
         <input type="file" id="myFile" name="filename" />
       </div>
-      <div btndiv>
+      
+      <div class='btndiv'>
         <button @click="create()" class="btnform">Ajouter</button>
         <button @click="serie = {}" class="btncancel">Annuler</button>
         <router-link to="/Home"> Retourner à la page d'accueil</router-link>
@@ -183,6 +179,11 @@ export default {
   flex: 2;
   height: 20px;
 }
+
+.check input {
+    margin-right: 10px; /* on aére un peu */
+}
+
 
 .btnform {
   background-color: #8fd14f;

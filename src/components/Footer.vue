@@ -5,7 +5,6 @@
 </template>
 
 <style>
-
 .footer {
   margin-top: 30px;
   text-align: center;

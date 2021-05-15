@@ -16,9 +16,10 @@
 
 <style scoped>
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    padding: 20px 20px 0;
+    align-items: center;  
+}
+h1 {
+    font-size: 30px;
 }
 </style>

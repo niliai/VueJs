@@ -1,5 +1,6 @@
 <template>
-  <div class='nav'>
+  <div>
+  <nav class='nav'>
     <ul>
       <li class='logo'>Soap Opera Addict</li>
       <button class='navbutton'><router-link to="/Home">Séries</router-link></button>
@@ -7,6 +8,7 @@
       <button class='navbutton'><router-link to="/Login" class='log'>S'identifier</router-link></button>
       <router-view></router-view>
       </ul>
+    </nav>
     </div>
 </template>
 

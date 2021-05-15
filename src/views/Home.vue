@@ -1,22 +1,21 @@
 <template>
-  <div class="container">
+  <div class="grid-container">
     <Header title="Liste des séries" />
     <Series/>
-    <Footer />
   </div>
+  
 </template>
 
 <script>
 import Header from "../components/Header";
 import Series from "../components/Series.vue";
-import Footer from "../components/Footer.vue";
+
 
 export default {
   name: "Home",
   components: {
     Header,
     Series,
-    Footer,
   },
   data() {
     return {
@@ -50,4 +49,5 @@ export default {
 body {
   margin: 0;
 }
+
 </style>

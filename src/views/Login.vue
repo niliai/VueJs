@@ -21,7 +21,7 @@ import Header from '../components/Header'
         methods: {},
     }
 </script>
-<style scoped>
+<style>
 
 body {
     margin: 0;
