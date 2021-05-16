@@ -24,17 +24,5 @@ export default {
 </script>
 
 <style>
-#series {
-    background-color: beige;
-    width: 300px;
-    margin: 5px auto;
-    padding: 5px;
-}
-.fas {
-    color: green;   
-}
-.p {
-    display: flex;
-}
 
 </style>

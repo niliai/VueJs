@@ -1,11 +1,11 @@
 <template>
   <div>
-  <nav class='nav'>
-    <ul>
+  <nav>
+    <ul class='menu'>
       <li class='logo'>Soap Opera Addict</li>
-      <button class='navbutton'><router-link to="/Home">Séries</router-link></button>
-      <button class='navbutton'><router-link to="/Add">Ajouter</router-link></button>
-      <button class='navbutton'><router-link to="/Login" class='log'>S'identifier</router-link></button>
+      <li class='navbutton'><router-link to="/Login">S'identifier</router-link></li>
+      <li class='navbutton'><router-link to="/Add">Ajouter</router-link></li>
+      <li class='navbutton'><router-link to="/Home">Séries</router-link></li>
       <router-view></router-view>
       </ul>
     </nav>
@@ -23,15 +23,32 @@
     }
 </script>
 <style scoped>
-
-.nav {
-  margin: 10px;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
+body {
+  font-family: sans-serif;
+}
+nav {
+  padding: 5px 20px;
+}
+ul {
+  list-style-type: none;
+}
+
+.menu li {
+  font-size: 16px;
+  padding: 15px 5px;
+  white-space: nowrap;
+}
+
 .logo {
-    background-color: #A2D2FF;
+    background-color: var(--primary);
     border: none;
     border-radius: 5px;
-    color: black;
+    color: var(--black);
     padding: 15px;
     text-align: center;
     text-decoration: none;
@@ -42,37 +59,7 @@
 }
 .navbutton {
     float: right;
-    border: 0;
     height: 50px;
-    font-size: 1rem;
-    text-align: center;
-    background-color: white;
-  
 }
-.button {
-  color: white;
-  font-weight: bold;
-  font-size: 2rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 40px 90px;
-};
 
-.log {
-  background-color:aqua;
-}
-.nav ul {
-  display: grid;
-  grid-gap: 20px;
-  list-style-type: none;
-  padding: 0;
-  grid-template-columns: repeat(4, 1fr);
-}
-.nav li {
-	display: inline-block;
-  list-style: none;
-  text-align: center;
-  margin: 0 30px;
-  cursor: pointer;
-}
 </style>

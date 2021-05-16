@@ -11,9 +11,10 @@
         <textarea name="description" rows="5" cols="35" v-model="serie.description" placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."/>
       </div>
       
+      <label> Qui aime cette série ?</label>
       <div class="check" v-for="user in tabUsers" :key="user.idUser">
         <input type="checkbox" v-bind:id="user.idUser" v-bind:name="user.idUser" v-bind:value="user.idUser" v-model="userListLike">
-          <label v-bind:for="user.idUser"> {{user.pseudo}} </label><br> 
+          <label v-bind:for="user.idUser"> {{user.pseudo}} </label>
       </div>
 
       <div class="form-control">
@@ -111,7 +112,7 @@ export default {
           console.log(error);
         });
     },
-  
+
   addUserLike(idSerie) {
     console.log("hello " + idSerie);
     let tabUserIdLike = this.getTabUserIdLike(idSerie);
@@ -181,14 +182,14 @@ export default {
 }
 
 .check input {
-    margin-right: 10px; /* on aére un peu */
+    margin-right: 10px; 
 }
 
 
 .btnform {
-  background-color: #8fd14f;
+  background-color: var(--erreur);
   border: none;
-  color: white;
+  color: var(--light);
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -198,9 +199,9 @@ export default {
 }
 
 .btncancel {
-  background-color: #ffafcc;
+  background-color: var(--erreur);
   border: none;
-  color: white;
+  color: var(--light);
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;

@@ -89,7 +89,7 @@ export default {
 .btnform {
   background-color: #8fd14f;
   border: none;
-  color: white;
+  color: var(--light);
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -99,9 +99,9 @@ export default {
 }
 
 .btncancel {
-  background-color: #ffafcc;
+  background-color: var(--erreur);
   border: none;
-  color: white;
+  color: var(--light);
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
