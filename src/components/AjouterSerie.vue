@@ -3,26 +3,46 @@
     <div class="add-form">
       <div class="form-control">
         <label>Nom :</label>
-        <input type="text" v-model="serie.titre" name="text" placeholder="Prison Break"/>
+        <input
+          type="text"
+          v-model="serie.titre"
+          name="text"
+          placeholder="Prison Break"
+        />
       </div>
-      
+
       <div class="form-controldes">
         <label>Description :</label>
-        <textarea name="description" rows="5" cols="35" v-model="serie.description" placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."/>
+        <textarea
+          name="description"
+          rows="5"
+          cols="35"
+          v-model="serie.description"
+          placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."
+        />
       </div>
-      
+
       <label> Qui aime cette série ?</label>
       <div class="check" v-for="user in tabUsers" :key="user.idUser">
-        <input type="checkbox" v-bind:id="user.idUser" v-bind:name="user.idUser" v-bind:value="user.idUser" v-model="userListLike">
-          <label v-bind:for="user.idUser"> {{user.pseudo}} </label><i style="color:pink" class="fa fa-trash"></i>
+        <input
+          type="checkbox"
+          v-bind:id="user.idUser"
+          v-bind:name="user.idUser"
+          v-bind:value="user.idUser"
+          v-model="userListLike"
+        />
+        <label v-bind:for="user.idUser"> {{ user.pseudo }} </label
+        ><span @click="deleteUser(user.idUser)"
+          ><i style="color:pink" class="fa fa-trash"></i
+        ></span>
       </div>
 
       <div class="form-control">
         <label>Ajouter une image</label>
         <input type="file" id="myFile" name="filename" />
       </div>
-      
-      <div class='btndiv'>
+
+      <div class="btndiv">
         <button @click="create()" class="btnform">Ajouter</button>
         <button @click="serie = {}" class="btncancel">Annuler</button>
         <router-link to="/Home"> Retourner à la page d'accueil</router-link>
@@ -41,13 +61,14 @@ export default {
         titre: "",
         description: "",
       },
-    tabUsers: [],
-    userListLike: [],
+      tabUsers: [],
+      userListLike: [],
     };
   },
   mounted() {
     if (this.$route.params.id) {
       this.getSerie(this.$route.params.id);
+      this.getLikes(this.$route.params.id);
     }
     this.getUsers();
   },
@@ -64,6 +85,10 @@ export default {
             this.$router.push({
               name: "Home",
             });
+            if (this.userListLike.length > 0) {
+              console.log(response.data.insertId);
+              this.addUserLike(this.$route.params.id);
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -77,11 +102,10 @@ export default {
               name: "Home",
             });
 
-            if(this.userListLike.length > 0) {
+            if (this.userListLike.length > 0) {
               console.log(response.data.insertId);
               this.addUserLike(response.data.insertId);
             }
-
           })
           .catch((error) => {
             console.log(error);
@@ -102,7 +126,8 @@ export default {
           console.log(error);
         });
     },
-  getUsers() {
+
+    getUsers() {
       axios
         .get("http://localhost:5000/api/users")
         .then((response) => {
@@ -113,31 +138,59 @@ export default {
         });
     },
 
-  addUserLike(idSerie) {
-    console.log("hello " + idSerie);
-    let tabUserIdLike = this.getTabUserIdLike(idSerie);
-
-     axios
-     .post("http://localhost:5000/api/userlike", tabUserIdLike)
-     .then((response) =>{
-       console.log(response.data);
+    getLikes(id) {
+      axios
+        .get("http://localhost:5000/api/userlike/" + id)
+        .then((response) => {
+          this.userListLike = response.data.map((val) => val.idUser);
         })
-        .catch((error) =>{
+        .catch((error) => {
           console.log(error);
         });
+    },
+
+    addUserLike(idSerie) {
+      let tabUserIdLike = this.getTabUserIdLike(idSerie);
+
+      axios
+        .post("http://localhost:5000/api/userlike", tabUserIdLike)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    deleteUser(id) {
+      if (confirm("Es-tu sur de supprimer cette série ?")) {
+        axios
+          .delete("http://localhost:5000/api/user/delete/" + id)
+          .then((response) => {
+            console.log(response);
+            this.getUsers();
+            if (this.$route.params.id) {
+              this.getSerie(this.$route.params.id);
+              this.getLikes(this.$route.params.id);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+
+    getTabUserIdLike(newId) {
+      let userIdLike = [];
+
+      for (let like of this.userListLike) {
+        userIdLike.push({ SerieId: newId, UserId: like });
+      }
+
+      return userIdLike;
+    },
   },
-  getTabUserIdLike(newId){
-    let userIdLike = [];
-
-    for(let like of this.userListLike){
-      userIdLike.push({"SerieId":newId, "UserId":like});
-    }
-
-    return userIdLike;
-  }
-
-  
-}}
+};
 </script>
 
 <style>
@@ -182,9 +235,8 @@ export default {
 }
 
 .check input {
-    margin-right: 10px; 
+  margin-right: 10px;
 }
-
 
 .btnform {
   background-color: var(--erreur);
