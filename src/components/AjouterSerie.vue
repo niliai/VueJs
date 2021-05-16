@@ -14,7 +14,7 @@
       <label> Qui aime cette série ?</label>
       <div class="check" v-for="user in tabUsers" :key="user.idUser">
         <input type="checkbox" v-bind:id="user.idUser" v-bind:name="user.idUser" v-bind:value="user.idUser" v-model="userListLike">
-          <label v-bind:for="user.idUser"> {{user.pseudo}} </label>
+          <label v-bind:for="user.idUser"> {{user.pseudo}} </label><i style="color:pink" class="fa fa-trash"></i>
       </div>
 
       <div class="form-control">
