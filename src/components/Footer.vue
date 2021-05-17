@@ -1,15 +1,22 @@
 <template>
     <footer>
-      <p>Copyright &copy; 2021 <br>Alicia Decruyenaere</p>
+      <p>{{ footerText }}</p>
       </footer>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      footerText: 'Copyright Alicia Decruyenaere 2021'
+    }
+  }
+}
+</script>
 
 <style>
 .footer {
-  margin-top: 30px;
+  background-color: var(--primary);
+  padding: 10px;
   text-align: center;
-  border-width: 2px;
-  border-style:dashed;
-  border-color:pink;
 }
 </style>

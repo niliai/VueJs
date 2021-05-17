@@ -35,7 +35,7 @@ export default {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.2fr 2.6fr 0.2fr;
+  grid-template-rows: 0.02fr 0.02fr 0.02fr;
   grid-template-areas:
     "navbar"
     "body"

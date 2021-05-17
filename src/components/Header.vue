@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
     export default {
         name: "Header",
         props: {
@@ -17,7 +16,6 @@
 <style scoped>
 header {
     padding: 20px 20px 0;
-    align-items: center;  
 }
 h1 {
     font-size: 30px;

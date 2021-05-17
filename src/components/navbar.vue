@@ -49,7 +49,7 @@ ul {
     border: none;
     border-radius: 5px;
     color: var(--black);
-    padding: 15px;
+    padding: 20px 20px 0;
     text-align: center;
     text-decoration: none;
     display: inline-block;

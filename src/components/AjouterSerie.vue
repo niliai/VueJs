@@ -3,23 +3,12 @@
     <div class="add-form">
       <div class="form-control">
         <label>Nom :</label>
-        <input
-          type="text"
-          v-model="serie.titre"
-          name="text"
-          placeholder="Prison Break"
-        />
+        <input type="text" v-model="serie.titre" name="text" placeholder="Prison Break"/>
       </div>
 
       <div class="form-controldes">
         <label>Description :</label>
-        <textarea
-          name="description"
-          rows="5"
-          cols="35"
-          v-model="serie.description"
-          placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."
-        />
+        <textarea name="description" rows="5" cols="35" v-model="serie.description" placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."/>
       </div>
 
       <label> Qui aime cette série ?</label>
@@ -29,8 +18,7 @@
           v-bind:id="user.idUser"
           v-bind:name="user.idUser"
           v-bind:value="user.idUser"
-          v-model="userListLike"
-        />
+          v-model="userListLike"/>
         <label v-bind:for="user.idUser"> {{ user.pseudo }} </label
         ><span @click="deleteUser(user.idUser)"
           ><i style="color:pink" class="fa fa-trash"></i
@@ -199,6 +187,7 @@ export default {
   width: 300px;
   padding: 20px;
 }
+
 .form-control {
   margin: 20px 0;
 }

@@ -3,12 +3,7 @@
     <div class="add-form">
       <div class="form-control">
         <label>Pseudo</label>
-        <input
-          type="text"
-          v-model="pseudo"
-          name="text"
-          placeholder="Ton pseudo"
-        />
+        <input type="text" v-model="pseudo" name="text" placeholder="Ton pseudo"/>
       </div>
       <button @click="adduser()" class="btnform">Je m'inscris</button>
       <button @click="pseudo = ''" class="btncancel">Annuler</button>

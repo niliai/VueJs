@@ -1,10 +1,10 @@
 <template>
   <div class='search'>
-    <input type="text" v-model="search" @input="searchFilter()" placeholder="Rechercher une série" />
+    <input type="text" v-model="search" @input="searchFilter()" placeholder="Rechercher une série"/>
       <div id="series">
         <div v-for="(serie, index) in Series" :key="serie.idSerie">
           <h1> {{ index + 1 }}. {{ serie.Titre }}&nbsp;&nbsp;<span style="font-size:16px;">
-            <span @click="deleteSerie(serie.idSerie)"><i style="color:red" class="fa fa-trash"></i></span>&nbsp;&nbsp;&nbsp;&nbsp;<span @click="update(serie.idSerie)">
+            <span @click="deleteSerie(serie.idSerie)"><i style="color:pink" class="fa fa-trash"></i></span>&nbsp;&nbsp;&nbsp;&nbsp;<span @click="update(serie.idSerie)">
                 <i class="fa fa-edit"></i></span></span></h1>
         <div>{{ serie.Description }}</div>
         <span class='italique'>Liké(s) par : </span>
@@ -32,6 +32,7 @@ export default {
     };
   },
   methods: {
+// Récupérer les séries de la database
     getSeries() {
       axios
         .get("http://localhost:5000/api/serie")
@@ -59,12 +60,14 @@ export default {
         });
     },
 
+// Barre de recherche
     searchFilter() {
       this.Series = this.allSeries.filter((data) =>
         data.Titre.toLowerCase().includes(this.search.toLowerCase())
       );
     },
 
+// Supprimer une série
     deleteSerie(id) {
       if (confirm("Es-tu sur de supprimer cette série ?")) {
         axios
@@ -78,7 +81,7 @@ export default {
           });
       }
     },
-
+// Modifier id série
     update(id) {
       this.$router.push({
         name: "Update",
@@ -88,16 +91,11 @@ export default {
   },
   mounted() {
     this.getSeries();
-    // this.get_series();
   },
 };
 </script>
-<style>
 
-#series {
-  width: auto;
-  padding: 5px;
-}
+<style>
 input[type="text"] {
   width: 100%;
   padding: 12px 20px;
@@ -105,7 +103,7 @@ input[type="text"] {
   box-sizing: border-box;
 }
 .search {
-   padding: 20px 20px 0;
+   padding: 20px;
    align-items: center;
 }
 .italique {
